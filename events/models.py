@@ -5,7 +5,7 @@ from django.db import models
 
 # Create your models here.
 
-class EventCategory(Enum):
+class EventCategory(models.TextChoices):
     CONCERT = 'Concert'
     FESTIVAL = 'Festival'
     SPORT = 'Sport'
@@ -14,7 +14,7 @@ class EventCategory(Enum):
 
 
 class Event(models.Model):
-    title = models.CharField(max_lenght = 100)
+    title = models.CharField(max_length = 100)
     desc = models.TextField()
     location = models.CharField(max_length=100)
     start_date = models.DateTimeField()
@@ -22,12 +22,12 @@ class Event(models.Model):
     owner = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE,
                               related_name='events')
-    capacity = models.IntegerField()
-    price = models.FloatField()
-    category = models.CharField(max_length=50,choices=[(tag.value,tag.value) for tag in EventCategory])
-    img = models.ImageField
+    capacity = models.PositiveIntegerField()
+    price = models.DecimalField(max_digits=8,decimal_places=2)
+    category = models.CharField(max_length=50,choices=EventCategory.choices)
+    img = models.ImageField(upload_to="event/pics")
 
-class TicketStaus(Enum):
+class TicketStatus(models.TextChoices):
     PAID = 'Paid'
     RESERVED = 'Reserved'
 
@@ -36,9 +36,10 @@ class Ticket(models.Model):
     buyer = models.ForeignKey(settings.AUTH_USER_MODEL,
                               on_delete=models.CASCADE,
                               related_name='tickets')
-    seat = None
-    purchase_date = None
-    status = models.CharField(max_length=50,choices=[(tag.value,tag.value) for tag in TicketStaus])
-    qr_code = None
+    seat = models.CharField(max_length=50,blank=True)
+    purchase_date = models.DateTimeField(auto_now_add=True)
+    status = models.CharField(max_length=50,choices=TicketStatus.choices)
+    qr_code = models.CharField(max_length=255,blank=True)
+
 
 
