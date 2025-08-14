@@ -42,6 +42,7 @@ class Ticket(models.Model):
     purchase_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=50,choices=TicketStatus.choices,default=TicketStatus.RESERVED)
     qr_code = models.CharField(max_length=255,blank=True)
+    price = models.DecimalField(max_digits=8, decimal_places=2)
 
     def __str__(self):
         return f"{self.event.title} – {self.buyer}"
