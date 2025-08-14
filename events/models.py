@@ -7,9 +7,9 @@ from django.db import models
 class EventCategory(models.TextChoices):
     CONCERT = ('concert','Concert')
     FESTIVAL = ('festival','Festival')
-    SPORT = ('sport','SPORT')
-    THEATER = ('theater','THEATER')
-    CONFERENCE = ('conference','CONFERENCE')
+    SPORT = ('sport','Sport')
+    THEATER = ('theater','Theater')
+    CONFERENCE = ('conference','Conference')
 
 
 class Event(models.Model):
@@ -27,8 +27,8 @@ class Event(models.Model):
     img = models.ImageField(upload_to="event/pics")
 
 class TicketStatus(models.TextChoices):
-    PAID = ('paid', 'PAID')
-    RESERVED = ('reserved','RESERVED')
+    PAID = ('paid', 'Paid')
+    RESERVED = ('reserved','Reserved')
 
 class Ticket(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE,related_name='tickets' )
