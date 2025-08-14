@@ -14,7 +14,7 @@ class EventCategory(models.TextChoices):
 
 class Event(models.Model):
     title = models.CharField(max_length = 100)
-    desc = models.TextField()
+    description = models.TextField()
     location = models.CharField(max_length=100)
     start_date = models.DateTimeField()
     end_date = models.DateTimeField()
