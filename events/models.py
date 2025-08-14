@@ -1,4 +1,3 @@
-from enum import Enum
 
 from django.conf import settings
 from django.db import models
@@ -6,11 +5,11 @@ from django.db import models
 # Create your models here.
 
 class EventCategory(models.TextChoices):
-    CONCERT = 'Concert'
-    FESTIVAL = 'Festival'
-    SPORT = 'Sport'
-    THEATER = 'Theater'
-    CONFERENCE = 'Conference'
+    CONCERT = ('concert','Concert')
+    FESTIVAL = ('festival','Festival')
+    SPORT = ('sport','SPORT')
+    THEATER = ('theater','THEATER')
+    CONFERENCE = ('conference','CONFERENCE')
 
 
 class Event(models.Model):
@@ -28,8 +27,8 @@ class Event(models.Model):
     img = models.ImageField(upload_to="event/pics")
 
 class TicketStatus(models.TextChoices):
-    PAID = 'Paid'
-    RESERVED = 'Reserved'
+    PAID = ('paid', 'PAID')
+    RESERVED = ('reserved','RESERVED')
 
 class Ticket(models.Model):
     event = models.ForeignKey(Event, on_delete=models.CASCADE,related_name='tickets' )
@@ -38,7 +37,7 @@ class Ticket(models.Model):
                               related_name='tickets')
     seat = models.CharField(max_length=50,blank=True)
     purchase_date = models.DateTimeField(auto_now_add=True)
-    status = models.CharField(max_length=50,choices=TicketStatus.choices)
+    status = models.CharField(max_length=50,choices=TicketStatus.choices,default=TicketStatus.RESERVED)
     qr_code = models.CharField(max_length=255,blank=True)
 
 
