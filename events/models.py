@@ -26,6 +26,9 @@ class Event(models.Model):
     category = models.CharField(max_length=50,choices=EventCategory.choices)
     img = models.ImageField(upload_to="event/pics")
 
+    def __str__(self):
+        return self.title
+
 class TicketStatus(models.TextChoices):
     PAID = ('paid', 'Paid')
     RESERVED = ('reserved','Reserved')
@@ -39,6 +42,9 @@ class Ticket(models.Model):
     purchase_date = models.DateTimeField(auto_now_add=True)
     status = models.CharField(max_length=50,choices=TicketStatus.choices,default=TicketStatus.RESERVED)
     qr_code = models.CharField(max_length=255,blank=True)
+
+    def __str__(self):
+        return f"{self.event.title} – {self.buyer}"
 
 
 
